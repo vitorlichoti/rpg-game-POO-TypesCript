@@ -1,4 +1,4 @@
-import Fighter from '../Figther/index';
+import Fighter from '../Fighter/index';
 
 abstract class Battle {
   constructor(protected player: Fighter) { }
