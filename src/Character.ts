@@ -22,8 +22,10 @@ class Character implements Fighter {
     this._lifePoints = this._maxLifePoints;
     this._strength = getRandomInt(1, 10);
     this._defense = getRandomInt(1, 10);
-
-    this._energy = this.energy;
+    this._energy = {
+      type_: this._archetype.energyType,
+      amount: getRandomInt(1, 10),
+    };
   }
 
   public get race():Race {
@@ -51,15 +53,20 @@ class Character implements Fighter {
   }
 
   public get energy():Energy {
-    return this._energy;
+    return {
+      type_: this._energy.type_,
+      amount: this._energy.amount,
+    };
   }
 
-  public receiveDamage(attackPoints: number): number {
-    const damage = this._defense - attackPoints;
+  receiveDamage(attackPoints: number): number {
+    const damage = attackPoints - this._defense;
 
-    if (damage > 0) { this._lifePoints -= damage; }
-  
-    this._lifePoints -= 1;
+    if (damage > 0) {
+      this._lifePoints -= damage;
+    } else {
+      this._lifePoints -= 1;
+    }
 
     if (this._lifePoints <= 0) { this._lifePoints = -1; }
 
